@@ -1,8 +1,6 @@
 # encoding:utf-8
-# -------赵甲-------2837838256@qq.com---------
-
-
-
+# -------赵甲-------
+import json
 import os
 import re
 import smtplib
@@ -149,14 +147,19 @@ class LoginDemo():
         time.sleep(2)
         # 上传确认还是什么？为什么会有这种东西？？？？好像没有也没问题诶，但为什么有呢？？？？
         url3 = 'http://jkgc.hrbeu.edu.cn/infoplus/interface/listNextStepsUsers'
+        #
         formData = re.sub('http://jkgc.*?/start',self.table_url, self.formData)
         formData = re.sub('"fieldYQJLjcbr".*?,|"fieldYQJLjchb".*?,|"fieldYQJLjcqtms".*?,|"fieldYQJLjcqt".*?,|"fieldYQJLjcwh".*?,|"fieldJBXXtbsf".*?,','',formData)
         formData = re.sub('"fieldCNS":false','"fieldCNS":"true"',formData)
+        # 提交ip
         # formData = re.sub('"_VAR_ADDR".*?,','"_VAR_ADDR":"183.202.249.128",',formData)
-        # formData = formData[:-1] + r',"groupMQJCRList": [0],"_VAR_ENTRY_NAME": "平安行动_",VAR_ENTRY_TAGS": "生活服务","fieldJBXXcsny": "","fieldCXXXjtzzs_Attr": "{\"_parent\":\"140000\"}","fieldCXXXjtzzq_Attr": "{\"_parent\":\"140600\"}","fieldSTQKglsjrq": "","fieldSTQKglsjsf": "","fieldSTQKfrsjrq": "","fieldSTQKfrsjsf": "","fieldZAshi_Attr": "{\"_parent\":\"230000\"}","fieldLHFrom": "","fieldLHTo": "","fieldCXXXdqszdstx_Attr": "{\"_parent\":\"140000\"}","fieldCXXXdqszdqtx_Attr": "{\"_parent\":\"140600\"}","fieldCXXXfxcfsj": "","fieldCXXXfxcfdhsj": "","fieldGLSJFrom": "","fieldGLSJTo": "","fieldCXXXsftjhbs1_Name": null,"fieldCXXXsftjhbs2_Attr": "{\"_parent\":\"420000\"}","fieldCXXXsftjhbq2_Attr": "{\"_parent\":\"\"}"}'
-        formData = formData[:-1] + r',"groupMQJCRList": [0],"_VAR_ENTRY_NAME": "平安行动_",VAR_ENTRY_TAGS": "生活服务","fieldJBXXcsny": "","fieldSTQKglsjrq": "","fieldSTQKglsjsf": "","fieldSTQKfrsjrq": "","fieldSTQKfrsjsf": "","fieldLHFrom": "","fieldLHTo": "","fieldCXXXfxcfsj": "","fieldCXXXfxcfdhsj": "","fieldGLSJFrom": "","fieldGLSJTo": "","fieldCXXXsftjhbs1_Name": null,"fieldCXXXsftjhbq2_Attr": "{\"_parent\":\"\"}"}'
+        # formData = formData[:-1] + r',"groupMQJCRList": [0],"_VAR_ENTRY_NAME": "平安行动_","_VAR_ENTRY_TAGS": "生活服务","fieldJBXXcsny": "","fieldCXXXjtzzs_Attr": "{\"_parent\":\"140000\"}","fieldCXXXjtzzq_Attr": "{\"_parent\":\"140600\"}","fieldSTQKglsjrq": "","fieldSTQKglsjsf": "","fieldSTQKfrsjrq": "","fieldSTQKfrsjsf": "","fieldZAshi_Attr": "{\"_parent\":\"230000\"}","fieldLHFrom": "","fieldLHTo": "","fieldCXXXdqszdstx_Attr": "{\"_parent\":\"140000\"}","fieldCXXXdqszdqtx_Attr": "{\"_parent\":\"140600\"}","fieldCXXXfxcfsj": "","fieldCXXXfxcfdhsj": "","fieldGLSJFrom": "","fieldGLSJTo": "","fieldCXXXsftjhbs1_Name": null,"fieldCXXXsftjhbs2_Attr": "{\"_parent\":\"420000\"}","fieldCXXXsftjhbq2_Attr": "{\"_parent\":\"\"}"}'
+
+        j = json.loads(formData, strict=False)
+        formData = formData[:-1] + r',"groupMQJCRList": [0],"_VAR_ENTRY_NAME": "平安行动_","_VAR_ENTRY_TAGS": "生活服务","fieldJBXXcsny": "","fieldCXXXjtzzs_Attr": "{\"_parent\":\"%s\"}","fieldCXXXjtzzq_Attr": "{\"_parent\":\"%s\"}","fieldSTQKglsjrq": "","fieldSTQKglsjsf": "","fieldSTQKfrsjrq": "","fieldSTQKfrsjsf": "","fieldZAshi_Attr": "{\"_parent\":\"%s\"}","fieldLHFrom": "","fieldLHTo": "","fieldCXXXdqszdstx_Attr": "{\"_parent\":\"%s\"}","fieldCXXXdqszdqtx_Attr": "{\"_parent\":\"%s\"}","fieldCXXXfxcfsj": "","fieldCXXXfxcfdhsj": "","fieldGLSJFrom": "","fieldGLSJTo": "","fieldCXXXsftjhbs1_Name": null,"fieldCXXXsftjhbs2_Attr": "{\"_parent\":\"%s\"}","fieldCXXXsftjhbq2_Attr": "{\"_parent\":\"%s\"}"}'%(j['fieldCXXXjtzz'],j['fieldCXXXjtzzs'],j['fieldZAsheng'],j['fieldCXXXdqszdshengtx'],j['fieldCXXXdqszdstx'],j['fieldCXXXsftjhbs1'],j['fieldCXXXsftjhbs2'])
         formData = re.sub(' ','',formData)
-        # formData = formData.encode('utf-8')
+
+
         boundFields = 'fieldCXXXdqszdjtx,fieldCXXXjtgjbc,fieldGLJL,fieldMQJCRxh,fieldCXXXsftjhb,fieldSTQKqt,fieldSTQKglsjrq,fieldGLFS,fieldYQJLjrsfczbldqzt,fieldCXXXjtfsqtms,fieldCXXXjtfsfj,fieldFHJH,fieldJBXXjjlxrdh,fieldJBXXxm,fieldZXZT,fieldCXXXsftjhbq2,fieldSTQKfrtw,fieldMQJCRxm,fieldCXXXsftjhbq,fieldSTQKqtms,fieldCXXXjtfslc,fieldJBXXlxfs,fieldJBXXxb,fieldCXXXjtfspc,fieldYQJLsfjcqtbl,fieldHGCZDM,fieldCXXXssh,fieldLHTJSX,fieldCXXXfxcfdhsj,fieldZAsheng,fieldJBXXgh,fieldCNS,fieldYC,fieldSTQKfl,fieldCXXXsftjwh,fieldCXXXfxxq,fieldSTQKdqstzk,fieldSTQKhxkn,fieldSTQKqtqksm,fieldLHFrom,fieldHelp,fieldFLid,fieldYQJLjrsfczbl,fieldGLSJTo,fieldJBXXjjlxr,fieldCXXXfxcfsj,fieldMQJCRcjdd,fieldSQSJ,fieldZAjtwz,fieldSTQKfrsjrq,fieldSTQKks,fieldJBXXcsny,fieldCXXXdqszdshengtx,fieldSTQKgm,fieldCXXXjtzzq,fieldLHJH,fieldCXXXdqszd,fieldCXXXjtzzs,fieldSTQKfx,fieldSTQKfs,fieldCXXXjtfsdb,fieldCXXXcxzt,fieldCXXXdqszdqtx,fieldCXXXdqszdstx,fieldCXXXjtfshc,fieldCXXXjtjtzz,fieldCXXXsftjhbs,fieldCXXXsftjhbs2,fieldSTQKsfstbs,fieldCXXXsftjhbs1,fieldCXXXcqwdq,fieldGLSJFrom,fieldCXXXjtfszj,fieldSFLB,fieldZAqu,fieldZAZT,fieldCXXXjtzz,fieldLHTo,fieldCXXXjtfsqt,fieldSTQKfrsjsf,fieldZAshi,fieldHGCSULY,fieldSTQKglsjsf,fieldJBXXdw,fieldCFDD,fieldCXXXsftjhbjtdz,fieldMQJCRlxfs'
 
         post_data3 = {
